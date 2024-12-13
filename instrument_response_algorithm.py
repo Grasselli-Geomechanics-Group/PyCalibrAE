@@ -37,22 +37,22 @@ if __name__ == '__main__':
     ### Ball properties ###
 
     # Chrome steel ball of diameter 0.66mm and 2.5mm
-    Rb = 2.5/2  # Ball radius in mm
+    Rb = 2.5/2  # Ball radius (mm)
     mub = 0.29  # Poisson ratio (unitless)
     Eb = 190E9  # Hardened 52100 Chromium Steel Young's modulus (Pa)
     rhob = 7800  # Density (kg/m3)
 
     # Ruby & sapphire ball
-    # Rb = 0.5/2  # Ball radius in mm
+    # Rb = 0.5/2  # Ball radius (mm)
     # mub = 0.28  # Poisson ratio (unitless)
     # Eb = 79E6 * 0.45359237 * 9.80665 / 0.0254 ** 2  # Synthetic sapphire modulus (Pa)
     # rhob = 3970  # Density (kg/m3)
     
     ### Processing parameters ###
     
-    T_S = 200E-6  # total event time from first arrival time (sec) for TS
-    T_L = 1/50  # total simulation time in seconds of SPECFEM3D
-    T_align = 180E-6  # total event time used to align waveforms by correlation (sec) for TS and SEM
+    T_S = 200E-6  # total event time from first arrival time for TS (s)
+    T_L = 1/50  # total simulation time of SPECFEM3D (s)
+    T_align = 180E-6  # total event time used to align waveforms by correlation for TS and SEM (s)
 
     sta = 100  # Short term window for triggering (number of sample)
     lta = 5000  # Long term window for triggering (number of sample)
@@ -62,19 +62,31 @@ if __name__ == '__main__':
         print('T_align > T_S')
         exit()
 
+    if not pathlib.Path(data_dir).is_dir():
+        print("Data directory doesn't exist.")
+        print("Sample data is available from Dataverse.")
+        print("https://doi.org/10.5683/SP3/71FAOR")
+        exit()
+
+    if not pathlib.Path(SEM_dir).is_dir():
+        print("SEM directory doesn't exist.")
+        print("Download SEM data from Dataverse")
+        print("https://doi.org/10.5683/SP3/II56AM")
+        exit()
+
     print('*** Working on {:s} ***'.format(data_dir))
     print('*** Working on {:s} ***'.format(sensor_loc))
 
     ### Load Sensor data ###
 
-    N = 3  # Number of repeated ball drops
+    N = 3  # Number of repeated ball drops / files to load
 
-    # Load lab data first ball only
+    # Load lab data for N ball drops
     [data_TS, data_dt_TS, idx_TS, voltage_range, filenmb, ball_diameters, drop_heights] \
         = function_modules.load_mat(data_dir, sensor_loc, N, T_L*2, sensor_loc[-1], 0)  # Load .mat files
 
     # Plot each column of data_TS in a loop
-    plt.figure()
+    plt.figure(1)
     for i in range(data_TS.shape[1]):
         plt.plot(np.arange(0,len(data_TS[:, i]))*data_dt_TS[i], data_TS[:, i], label=f'Drop {i + 1}')
 
@@ -132,7 +144,7 @@ if __name__ == '__main__':
     )
 
     # Plot source function
-    plt.figure()
+    plt.figure(2)
     plt.plot(t, -ft, label=f'R1={Rb:.2g} mm, h={drop_heights[0] / 100:.2g} m')
     plt.title('Source function')
     plt.xlabel('Time (s)')
@@ -144,7 +156,7 @@ if __name__ == '__main__':
     print("*** Low-pass and down-sampling Green's function ***")
 
     # Define constants and compute sampling frequency
-    max_SEM_freq = 1 / 7.6079232e-7  # Max frequency resolution of SEM
+    max_SEM_freq = 1 / 7.6079232e-7  # Max frequency resolution of SEM (Hz)
     sampling_freq = 1 / np.diff(t_TL[:2])[0]  # Compute sampling frequency
 
     # Apply low-pass filter to remove high frequencies above SEM mesh resolution
@@ -184,7 +196,7 @@ if __name__ == '__main__':
     disp_TS = function_modules.zeropad_theory(len(disp_TS) * 2, disp_TS)
 
     # Plot displacement function
-    plt.figure()
+    plt.figure(3)
     plt.subplot(2, 1, 1)
     plt.title('Theoretical displacement short window $T^{S}$')
     plt.plot(np.arange(0, len(disp_TS)) / sf - T_S, disp_TS)
@@ -306,8 +318,7 @@ if __name__ == '__main__':
         data_std_TL_noise = np.zeros(np.shape(data_stacked_TL_noise))
 
     # Plot aligned waveforms and final stacked
-    plt.figure()
-    # First subplot
+    plt.figure(4)
     plt.subplot(3, 1, 1)
     for i in range(data_TS.shape[1]):
         plt.plot(np.arange(-len(data_TS[:, i])/2, len(data_TS[:, i])/2) * data_dt_TS[i], data_TS[:, i], label=f'Drop {i + 1}')
@@ -447,7 +458,7 @@ if __name__ == '__main__':
         pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
 
     ### Plot all lab data traces, stacked trace ###
-    plt.figure(1)
+    plt.figure(5)
     plt.subplot(211)
     for i in range(data_TS.shape[1]):
         plt.plot(t_TS * 10 ** 3, data_aligned_TS[:, i] * 1E3)
@@ -467,7 +478,7 @@ if __name__ == '__main__':
     plt.xlim((-max(t_TS) * 10 ** 3, max(t_TS) * 10 ** 3))
     plt.show()
 
-    plt.figure(1)
+    plt.figure(6)
     plt.subplot(211)
     for i in range(data_TS.shape[1]):
         plt.plot(t_TL * 10 ** 3, data_aligned_TL[:, i] * 1E3)
@@ -487,7 +498,7 @@ if __name__ == '__main__':
     plt.show()
 
     ### Plot Zoomed stacked data and TS ###
-    plt.figure(2)
+    plt.figure(7)
     plt.subplot(211)
     plt.plot(t_TS * 10 ** 3, data_stacked_TS * 1E3, color='k')
     plt.ylabel('lab signal (mV)')
@@ -503,7 +514,7 @@ if __name__ == '__main__':
     plt.show()
 
     ### Plot Zoomed stacked data and TL ###
-    plt.figure(3)
+    plt.figure(8)
     plt.subplot(211)
     plt.plot(t_TL * 10 ** 3, data_stacked_TL * 1E3, color='k')
     plt.ylabel('lab signal (mV)')
@@ -512,7 +523,6 @@ if __name__ == '__main__':
 
     plt.subplot(212)
     plt.plot(t_TL * 10 ** 3, disp_TL * 10 ** 9, color='tab:blue', label='TL SEM')
-    # plt.plot(t_TL*10**3, amp_TL_pad * 10 ** 9,linestyle = 'dashed',label='SPECFEM')
     plt.xlabel('time (ms)')
     plt.ylabel('displacement (nm)')
     plt.legend()
@@ -520,7 +530,7 @@ if __name__ == '__main__':
     plt.show()
 
     ### Plot Zoomed TS data after BH window ###
-    plt.figure(4)
+    plt.figure(9)
     plt.subplot(211)
     plt.plot(t_TS * 10 ** 3, lab_TS_bh * 1E3, color='k', label='Balldrop')
     plt.ylabel('lab signal (mV)')
@@ -536,7 +546,7 @@ if __name__ == '__main__':
     plt.show()
 
     ### Plot Zoomed TL data after BH window ###
-    plt.figure(5)
+    plt.figure(10)
     plt.subplot(211)
     plt.plot(t_TL * 10 ** 3, lab_TL_bh * 1E3, color='k')
     plt.ylabel('lab signal (mV)')
@@ -552,7 +562,7 @@ if __name__ == '__main__':
     plt.show()
 
     ### Plot TS and lab data zoomed out (zero-pad) ###
-    plt.figure(6)
+    plt.figure(11)
     plt.subplot(211)
     plt.plot(t_TS * 10 ** 3, lab_TS_bh * 1E3, color='k')
     plt.ylabel('lab signal (mV)')
@@ -568,7 +578,7 @@ if __name__ == '__main__':
     plt.show()
 
     ### Plot TL and lab data zoomed out (zero-pad) ###
-    plt.figure(7)
+    plt.figure(12)
     plt.subplot(211)
     plt.plot(t_TL * 10 ** 3, lab_TL_bh * 1E3, color='k')
     plt.ylabel('lab signal (mV)')
@@ -583,7 +593,7 @@ if __name__ == '__main__':
     plt.autoscale(enable=True, axis='x', tight=True)
     plt.show()
 
-    plt.figure(8)
+    plt.figure(13)
     plt.subplot(211)
     plt.plot(t_TS * 10 ** 3, data_stacked_TS_noise * 1E3, color='k')
     plt.ylabel('lab noise short window (mV)')
@@ -597,7 +607,7 @@ if __name__ == '__main__':
     plt.autoscale(enable=True, axis='x', tight=True)
     plt.show()
 
-    plt.figure(9)
+    plt.figure(14)
     plt.subplot(211)
     plt.plot(t_TL * 10 ** 3, data_stacked_TL_noise * 1E3, color='k')
     plt.ylabel('lab noise long window (mV)')
@@ -612,7 +622,7 @@ if __name__ == '__main__':
     plt.show()
 
     ### TL and TS, force function FFT ###
-    plt.figure(10)
+    plt.figure(15)
     plt.subplot(211)
     plt.plot(Sfreq_TL[0:int(len(Sfreq_TL) / 2)], abs(Sfft_TL[0:int(len(Sfreq_TL) / 2)]), color='tab:blue',
              label='Lab data TL')
@@ -637,7 +647,7 @@ if __name__ == '__main__':
     plt.show()
 
     ### TS and TL Instrument response ###
-    plt.figure(11)
+    plt.figure(16)
     plt.plot(Sfreq_TL[0:int(len(Sfreq_TL) / 2)], abs(Iw_TL[0:int(len(Sfreq_TL) / 2)]/1E9),
              label='TL SEM',
              color='tab:blue')
@@ -674,7 +684,7 @@ if __name__ == '__main__':
     plt.show()
 
     ### Lab data FFT ###
-    plt.figure(12)
+    plt.figure(17)
     plt.plot(Sfreq_TL[0:int(len(Sfreq_TL) / 2)], abs(Sfft_TL[0:int(len(Sfreq_TL) / 2)]),
              label='Signal TL', color='b')
     plt.plot(Sfreq_TS[0:int(len(Sfreq_TS) / 2)], abs(Sfft_TS[0:int(len(Sfreq_TS) / 2)]),
@@ -773,8 +783,8 @@ if __name__ == '__main__':
     # Adjust layout
     plt.show()
 
-    ### Lab data, noise and instrument response for TS and TL ###
-    plt.figure(14)
+    ### Lab data and noise for TS and TL ###
+    plt.figure(18)
     plt.subplot(211)
     plt.plot(Sfreq_TS[0:int(len(Sfreq_TS) / 2)] / 1E3, abs(Sfft_TS[0:int(len(Sfreq_TS) / 2)]),
              label='Signal TS')

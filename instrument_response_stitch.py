@@ -1,16 +1,17 @@
 import function_modules
 
+import pathlib
 import numpy as np
 import pickle
 import matplotlib.pyplot as plt
 
 ### Input Parameters ###
-sensor = 'R15a'  # Sensor type
-sensor_loc = 'chH'  # Channel / incident angle on plate
-Rb = [0.5, 0.66, 2.5]  # Ball types
+sensor = 'R15a'  # Sensor type (name of folder)
+sensor_loc = 'chH'  # Channel / incident angle on plate (channel name of pickle file)
+Rb = [0.5, 0.66, 2.5]  # Ball types (ball name of pickle file)
 
-SNR = 1  # SNR threshold
-nbin = 5  # Number of bins for averaging
+SNR = 1  # SNR threshold (float)
+nbin = 5  # Number of bins for averaging (integer)
 w0L = 1E4  # High-frequency cutoff (Hz)
 
 print(f'--- Working on {sensor_loc} ---')
@@ -74,6 +75,12 @@ Iw_std_TL_valid_SNR_all = []
 for Rb_idx, ball in enumerate(Rb):
     
     filename_open = f'out/{sensor}_{ball:.2f}mm_{sensor_loc}.pickle'
+
+    if not pathlib.Path(filename_open).is_file():
+        print('{:s} doesn\'t exist.'.format(filename_open))
+        print('Did you run instrument_response_algorithm.py for this channel AND ball type?')
+        exit()
+
     print(f'Reading {filename_open}')
 
     # Load data
@@ -362,7 +369,7 @@ print('Saving {:s}'.format(filename_pickle))
 with open(filename_pickle, 'wb') as fp:
     pickle.dump(instrument_response, fp, pickle.HIGHEST_PROTOCOL)
 
-plt.figure(21)
+plt.figure(2)
 plt.subplot(411)
 if len(Rb) >= 1:
     plt.plot(Sfreq_TS[0:int(len(Sfreq_TS) / 2)], (abs(Iw_TS_all[0, 0:int(len(Iw_TS)/2)]/1E9)),
@@ -540,7 +547,7 @@ plt.grid(True, which='both')
 plt.xlim(1 / T_S, 1.5E6)
 plt.show()
 
-plt.figure(22)
+plt.figure(3)
 plt.subplot(411)
 if len(Rb) >= 1:
     plt.plot(Sfreq_TL[0:int(len(Sfreq_TL) / 2)], (abs(Iw_TL_all[0, 0:int(len(Iw_TL)/2)]/1E9)),
@@ -732,7 +739,7 @@ plt.grid(True, which='both')
 plt.xlim(1 / T_L, 1.5E6)
 plt.show()
 
-plt.figure(23)
+plt.figure(4)
 plt.plot(bin_centers_lp, (abs(bin_means_lp/1E9)),
          label='Instrument response TL {:s}'.format(sensor_loc), color='tab:blue')
 plt.plot(bin_means_lp_gap,

@@ -468,7 +468,6 @@ def specfem_read(filepath_fe, filename_fe, nrow=None):
     dt, amp = df[0].values, df[1].values
 
     return dt, amp
-
 def ball_impact(sf, R1, h1, mu1, E1, rho1, mu2, E2, v_ini=None, sf_min=None):
     # Ball impact / Hertz impact theory
     # Equations from Wu and McLaskey 2018, Gregory and Glaser 2012
@@ -523,7 +522,6 @@ def ball_impact(sf, R1, h1, mu1, E1, rho1, mu2, E2, v_ini=None, sf_min=None):
         t, ft = t1, ft1
 
     return ft, t, tc
-
 def bin_fft(freq, amp, freq_bin, amp_std = None, bin_min = None):
 
     if bin_min is None:
