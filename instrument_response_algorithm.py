@@ -51,7 +51,9 @@ if __name__ == '__main__':
     ### Processing parameters ###
     
     T_S = 200E-6  # total event time from first arrival time for TS (s)
-    T_L = 1/50  # total simulation time of SPECFEM3D (s)
+    # total window length after zero-padding is 2*TS
+    T_L = 1/50  # total simulation time of SPECFEM3D for TL from first arrival (s)
+    # total window length after zero-padding is 2*TL
     T_align = 180E-6  # total event time used to align waveforms by correlation for TS and SEM (s)
 
     sta = 100  # Short term window for triggering (number of sample)

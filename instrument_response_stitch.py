@@ -149,6 +149,9 @@ for Rb_idx, ball in enumerate(Rb):
     print('TS bin resolution {:g} Hz/bin'.format((sf / 2) / round(T_S * sf)))
     print('TL bin resolution {:g} Hz/bin'.format((sf / 2) / round(T_L * sf)))
 
+    ### Crop within the valid range 1/T < w < 1/tc ###
+    # Note that T is half-time length from P wave arrival so full window length is 2*T
+
     idx_valid_range_TS = np.where((Sfreq_TS >= (1/T_S)) & (Sfreq_TS <= (1/tc)))
     Sfft_TS_valid = Sfft_TS[idx_valid_range_TS]
     Iw_TS_valid= Iw_TS[idx_valid_range_TS]
@@ -178,6 +181,8 @@ for Rb_idx, ball in enumerate(Rb):
     idx_valid_range_TL = np.where((Nfreq_TL >= (1 / T_L)) & (Nfreq_TL <= (1 / tc)))
     Nfft_TL_valid = Nfft_TL[idx_valid_range_TL]
     Nfreq_TL_valid = Nfreq_TL[idx_valid_range_TL]
+
+    # Crop within defined SNR
 
     idx_valid_range_TS_SNR = np.where(abs(Sfft_TS_valid) > abs(Nfft_TS_valid) * SNR)
     idx_valid_range_TL_SNR = np.where(abs(Sfft_TL_valid) > abs(Nfft_TL_valid) * SNR)
