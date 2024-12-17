@@ -25,7 +25,7 @@ Due to repository limits, the example sensor data [sensor_data](https://doi.org/
 Both [sensor_data](https://doi.org/10.5683/SP3/II56AM) and [SEM_data](https://doi.org/10.5683/SP3/71FAOR) directories should be placed within the working [PyCalibrAE](./) folder. 
 1. The general simulated SEM results are in the [SEM_data](SEM_data/) folder. These are the theoretical velocity responses ([.semv](SEM_data/REC.POS90.FXZ.semv)) due to the Heaviside force-time function at
 a given incident angle (`.POS00-90`) for the X (`.FXX`), Y (`.FXY`) and Z (`.FXZ`) components.
-2. The sensor data are located within the [sensor_data](sensor_data/) folder. A subfolder is used for a given sensor (e.g. [R15a](sensor_data/R15a/)) within this folder.
-Within the individual sensor folder ([PyCalibrAE/R15a/](sensor_data/R15a/)), a subfolder contains all the ball impact data for that given ball size 
-(e.g. [PyCalibrAE/R15a/0.5mm/*.mat](sensor_data/R15a/0.5mm)). The [.mat](sensor_data/R15a/0.5mm/chH-0001.mat) files are the output MATLAB data files from the PicoScope 4824A data acquisition software [PicoScope 7](https://www.picotech.com/products/picoscope-7-software).
+2. The sensor data are located within the [sensor_data](sensor_data/) folder. A subfolder is used for a given sensor (e.g. [sensor_data/R15a](sensor_data/R15a/)) within this folder.
+Within the individual sensor folder ([PyCalibrAE/sensor_data/R15a/](sensor_data/R15a/)), a subfolder contains all the ball impact data for that given ball size 
+(e.g. [PyCalibrAE/sensor_data/R15a/0.5mm/*.mat](sensor_data/R15a/0.5mm)). The [.mat](sensor_data/R15a/0.5mm/chH-0001.mat) files are the output MATLAB data files from the PicoScope 4824A data acquisition software [PicoScope 7](https://www.picotech.com/products/picoscope-7-software).
 Additional information, such as the `ball_diameter` (mm), `drop_height` (cm), and acquisition `voltage_range` (V), has been manually appended to the `.mat` files.
