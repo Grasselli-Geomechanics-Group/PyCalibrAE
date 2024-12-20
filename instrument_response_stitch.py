@@ -415,7 +415,7 @@ if len(Rb) >= 3:
                      (abs(Iw_TS_all[2, 0:int(len(Sfreq_TS) / 2)]/1E9)),
                      color='tab:green',
                      alpha=0.3)
-plt.title('Instrument response $I_3^S(\\theta_{{{:g}^\circ}},w)$'.format(angle))
+plt.title(r'Instrument response $I_3^S(\theta_{{{:g}^\circ}}, w)$'.format(angle))
 plt.legend()
 plt.ylabel('Absolute Amplitude \n relative to 1V/nm')
 plt.xscale('log')
@@ -461,7 +461,7 @@ if len(Rb) >= 3:
                      (abs(Iw_TS_valid_all[2]/1E9)),
                      color='tab:green',
                      alpha=0.3)
-plt.title('Valid range $2/T^S \leq w^S \leq 1/t_c$')
+plt.title(r'Valid range $2/T^S \leq w^S \leq 1/t_c$')
 plt.legend()
 # plt.ylabel('Amplitude relative to Vs/m')
 plt.ylabel('Absolute Amplitude \n relative to 1V/nm')
@@ -518,7 +518,7 @@ if len(Rb) >= 2:
 if len(Rb) >= 3:
     plt.plot(Sfreq_TS_invalid_SNR_all[2], (abs(Iw_TS_invalid_SNR_all[2]/1E9)), '*', color='tab:green', markeredgecolor='black', markeredgewidth=0.5, ms=12, label='Below SNR')
 
-plt.title('SNR $ |S_3^S(\\theta_{{{:g}^\circ}},w)|/|H_3^S(\\theta_{{{:g}^\circ}},w)| > {:d}$'.format(angle,angle,SNR))
+plt.title(r'SNR $|S_3^S(\theta_{{{:g}^\circ}}, w)| / |H_3^S(\theta_{{{:g}^\circ}}, w)| > {:d}$'.format(angle, angle, SNR))
 plt.legend()
 plt.ylabel('Absolute Amplitude \n relative to 1V/nm')
 plt.xscale('log')
@@ -542,7 +542,7 @@ plt.fill_between(Sfreq_TS_stitch,
                  alpha=0.3)
 plt.plot(Sfreq_TS_stitch_gap, (np.min(abs(Iw_TS_stitch_wavg/1E9))*np.ones((1,len(Sfreq_TS_stitch_gap))).flatten()),'*',
           color='tab:brown', markeredgecolor='black', markeredgewidth=0.5, ms=12, label='Data Gap')
-plt.title('Weighted average instrument response $\overline{{I_3^S}}(\\theta_{{{:g}^\circ}},w)$'.format(angle))
+plt.title(r'Weighted average instrument response $\overline{{I_3^S}}(\theta_{{{:g}^\circ}}, w)$'.format(angle))
 plt.xlabel('Frequency (Hz)')
 plt.ylabel('Absolute Amplitude \n relative to 1V/nm')
 plt.xscale('log')
@@ -593,7 +593,7 @@ if len(Rb) >= 3:
                      (abs(Iw_TL_all[2, 0:int(len(Sfreq_TL) / 2)]/1E9)),
                      color='tab:green',
                      alpha=0.3)
-plt.title('Instrument response $I_3^L(\\theta_{{{:g}^\circ}},w)$'.format(angle))
+plt.title(r'Instrument response $I_3^L(\theta_{{{:g}^\circ}}, w)$'.format(angle))
 plt.legend()
 # plt.ylabel('Amplitude relative to Vs/m')
 plt.ylabel('Absolute Amplitude \n relative to 1V/nm')
@@ -640,7 +640,7 @@ if len(Rb) >= 3:
                      (abs(Iw_TL_valid_all[2]/1E9)),
                      color='tab:green',
                      alpha=0.3)
-plt.title('Valid range $2/T^L \leq w^L \leq 1/t_c$')
+plt.title(r'Valid range $2/T^L \leq w^L \leq 1/t_c$')
 plt.legend()
 plt.ylabel('Absolute Amplitude \n relative to 1V/nm')
 plt.xscale('log')
@@ -695,7 +695,7 @@ if len(Rb) >= 2:
     plt.plot(Sfreq_TL_invalid_SNR_all[1], (abs(Iw_TL_invalid_SNR_all[1]/1E9)), '*', color='tab:orange', markeredgecolor='black', markeredgewidth=0.5, ms=12, label='Below SNR')
 if len(Rb) >= 3:
     plt.plot(Sfreq_TL_invalid_SNR_all[2], (abs(Iw_TL_invalid_SNR_all[2]/1E9)), '*', color='tab:green', markeredgecolor='black', markeredgewidth=0.5, ms=12, label='Below SNR')
-plt.title('SNR $ |S_3^L(\\theta_{{{:g}^\circ}},w)|/|H_3^L(\\theta_{{{:g}^\circ}},w)| > {:d}$'.format(angle,angle,SNR))
+plt.title(r'SNR $ |S_3^L(\theta_{{{:g}^\circ}}, w)| / |H_3^L(\theta_{{{:g}^\circ}}, w)| > {:d}$'.format(angle, angle, SNR))
 plt.legend()
 plt.ylabel('Absolute Amplitude \n relative to 1V/nm')
 plt.xscale('log')
@@ -734,7 +734,7 @@ plt.plot(Sfreq_TL_stitch_gap, (np.min(abs(Iw_TL_stitch_wavg/1E9))*np.ones((1,len
 plt.plot(bin_centers[nan_idx],
          (np.min(abs(Iw_TL_stitch_wavg/1E9))*1.2 * np.ones((1, len(nan_idx))).flatten()), '*',
          color='tab:olive', markeredgecolor='black', markeredgewidth=0.5, ms=12, label='Data Gap')
-plt.title('Weighted average instrument response $\overline{{I_3^L}}(\\theta_{{{:g}^\circ}},w)$'.format(angle))
+plt.title(r'Weighted average instrument response $\overline{{I_3^L}}(\theta_{{{:g}^\circ}}, w)$'.format(angle))
 plt.legend()
 plt.xlabel('Frequency (Hz)')
 plt.ylabel('Absolute Amplitude \n relative to 1V/nm')
