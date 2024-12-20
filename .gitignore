@@ -1,0 +1,17 @@
+# SEM data
+*.semv
+
+# sensor data
+*.mat
+
+# virtual environment venv
+.venv/
+
+# Python cache
+/__pycache__
+
+# output folder
+out/
+
+# Jupyter notebook checkpoints
+/.ipynb_checkpoints
