@@ -18,11 +18,10 @@ The calculated instrument response will be output in the [PyCalibrAE/out/](out/)
 2. The [instrument_response_stitch.py](instrument_response_stitch.py) or Jupyter example [instrument_response_stitch.ipynb]() stitches different ball impacts (e.g. 0.5mm, 0.66mm, 2.5mm)
 to create a broadband calibration curve. The individual `.pickle` files across different ball impacts (e.g. R15a_0.50mm_chC.pickle, R15a_0.66mm_chC.pickle, R15a_2.50mm_chC.pickle)
 are stitched together to form a single broadband calibration curve (e.g. R15a_chC.pickle).
-3. The [function_modules.py](function_modules.py) contains various functions to help automatically align waveform, read the
-data format, etc.
+3. The [function_modules.py](function_modules.py) contains various functions to help automatically align waveform, read the data format, etc.
 
-Due to repository limits, the example sensor data [sensor_data](https://doi.org/10.5683/SP3/II56AM) and simulated SEM results [SEM_data](https://doi.org/10.5683/SP3/71FAOR) must be downloaded from the [University of Toronto Dataverse](https://borealisdata.ca/dataverse/PyCalibrAE).
-Both [sensor_data](https://doi.org/10.5683/SP3/II56AM) and [SEM_data](https://doi.org/10.5683/SP3/71FAOR) directories should be placed within the working [PyCalibrAE](./) folder. 
+Due to repository limits, the example sensor data [sensor_data](https://doi.org/10.5683/SP3/71FAOR) and simulated SEM results [SEM_data](https://doi.org/10.5683/SP3/II56AM) must be downloaded from the [University of Toronto Dataverse](https://borealisdata.ca/dataverse/PyCalibrAE).
+Both [sensor_data](https://doi.org/10.5683/SP3/71FAOR) and [SEM_data](https://doi.org/10.5683/SP3/II56AM) directories should be placed within the working [PyCalibrAE](./) folder. 
 1. The general simulated SEM results are in the [SEM_data](SEM_data/) folder. These are the theoretical velocity responses ([.semv](SEM_data/REC.POS90.FXZ.semv)) due to the Heaviside force-time function at
 a given incident angle (`.POS00-90`) for the X (`.FXX`), Y (`.FXY`) and Z (`.FXZ`) components.
 2. The sensor data are located within the [sensor_data](sensor_data/) folder. A subfolder is used for a given sensor (e.g. [sensor_data/R15a](sensor_data/R15a/)) within this folder.
