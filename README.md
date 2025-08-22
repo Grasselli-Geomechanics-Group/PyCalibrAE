@@ -1,7 +1,7 @@
 # [PyCalibrAE](https://github.com/Grasselli-Geomechanics-Group/PyCalibrAE.git)
 
 Toolbox for broadband calibration of acoustic emission sensors, see accompanying paper [Broadband Calibration of Acoustic Emission Sensors: Toolbox, Applications, and Key Insights](). 
-If you use this package, please cite XXX.
+If you use this package, please cite 'PyCalibrAE: An open-source toolbox for broadband calibration of ultrasonic sensors' [Kravchinsky et al. (2025)](10.1109/JSEN.2025.3599798).
 
 This toolbox is a broadband calibration toolbox for absolute sensor calibration using theoretical Hertzian ball impacts on a transfer medium.
 We utilize the spectral-element method (SEM) with the open-source [SPECFEM3D Cartesian](https://github.com/SPECFEM/specfem3d) framework to simulate high-resolution seismic wave propagation. 
